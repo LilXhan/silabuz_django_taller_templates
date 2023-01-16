@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  taller:
+    container_name: templates
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+
+networks:
+  default:
+    name: development
+    external: True

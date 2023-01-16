@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h2>List books</h2>
+<hr>
+
+</ul>
+  <!-- Iterate over object_list -->
+  {% for object in object_list %}
+    <div style="background-color:{% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}">
+      {% filter lower %}
+      <li>Titulo: {{object.title}}</li>
+      {% endfilter %}
+      {% if object.authors|length <= 30 %}
+      <li>Autores: {{object.authors}}</li>
+      <li>Tamaño del autor: {{object.authors|length}}</li>
+      {% endif %}
+      <li>Lenguaje: {{ object.language_code|upper }}</li>
+      {% if object.publisher|length <= 20 and object.text_reviews_count > 10 %}
+      <li>Editorial: {{ object.publisher }}</li>
+      <li>Numero de Reviews: {{ object.text_reviews_count }}</li>
+      {% endif %}
+    </div>
+    <hr>
+  {% empty %}
+    <!-- If object_list is empty -->
+    <li>No hay objetos</li>
+  {% endfor %}
+<ul>
+
+{% endblock content %}

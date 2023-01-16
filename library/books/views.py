@@ -1,0 +1,59 @@
+from django.shortcuts import render
+from django.views.generic import ListView, View
+
+from .models import Book
+
+import urllib.request
+import json
+
+class Index(View):
+    def get(self, request):
+
+        url = 'https://silabuzinc.github.io/books/books.json'
+        data = urllib.request.urlopen(url)
+        data = json.load(data)
+
+
+        for book in data:
+            book.pop('bookID')
+            book.pop('FIELD13')
+            
+            book['authors'] = book['authors'][:400]
+
+            try:
+                book['num_pages'] = int(book['num_pages'])
+            except:
+                book['num_pages'] = 0
+
+            try: 
+                book['average_rating'] = float(book['average_rating'])
+            except:
+                book['average_rating'] = 0
+
+            
+            book['publication_date'] = book['publication_date'].split('/')
+
+            if '/'.join(book['publication_date']) in ['11/31/2000', '6/31/1982']:
+                date = '2023-01-16'
+                book['publication_date'] = date
+                b = Book.objects.create(**book)
+                b.save()
+                break
+
+            if len(book['publication_date']) == 3:
+                date = ''
+                date += book['publication_date'][2] + '-'
+                date += book['publication_date'][0] + '-'
+                date += book['publication_date'][1]
+            else:
+                date = '2023-01-16' 
+
+            book['publication_date'] = date
+
+            b = Book.objects.create(**book)
+            b.save()
+        
+
+class ListBook(ListView):
+    template_name = 'book_list.html'
+    model = Book
