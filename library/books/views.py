@@ -1,10 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
 
 from .models import Book
-
+from .forms import BookForm
 import urllib.request
 import json
+
+class CreateBook(View):
+    def get(self, request):
+
+        form = BookForm()
+
+        context = {
+            'form': form
+        }
+
+        return render(request, 'add.html', context)
+
+    def post(self, request):
+
+        form = BookForm(request.POST)
+        if form.is_valid():
+            print('hola')
+            cleaned_data = form.cleaned_data
+            b = Book.objects.create(**cleaned_data)
+            b.save()
+            
+            return redirect('list-book')
+    
 
 class Index(View):
     def get(self, request):

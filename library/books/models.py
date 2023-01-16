@@ -12,3 +12,7 @@ class Book(models.Model):
     text_reviews_count = models.IntegerField(default=0)
     publication_date = models.DateField()
     publisher = models.CharField(max_length=400)
+    class Meta:
+        db_table = 'books'
+        ordering = ['-id']
+
