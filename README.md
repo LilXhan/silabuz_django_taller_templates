@@ -243,3 +243,6 @@ Luego con la información filtrada, añadir el siguiente tag.
 ### Consideraciones
 
 Hacer uso de `and` al momento de concatenar el `if` para realizar correctamente el filtrado.
+
+
+- [Diapositiva](https://docs.google.com/presentation/d/e/2PACX-1vS-iWShuvwvH82B3qQuSQEyum2fNDRM8XzUhK6_voZxHetjWCLFq6Q9_6CJO0PTjZe7uiATtO7lOCl4/embed?start=false&loop=false&delayms=3000)
